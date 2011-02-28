@@ -7,6 +7,7 @@ int inputlist(int * );
 void displaylist(int * , int * );
 int secondary_menu(int * , int * );
 void append_list(int *, int * );
+void extend_list(int *, int * );
 
 void main()
 {
@@ -103,7 +104,8 @@ switch(ch2)
 {
 case 1 : append_list(c3, len);
 	 break;
-case 2 : break;
+case 2 : extend_list(c3, len);
+	 break;
 case 3 : break;
 case 4 : break;
 case 5 : break;
@@ -128,16 +130,28 @@ return 1;
 
 void append_list(int *c4, int *len)
 {
+int i=(*len);
+c4[i] = malloc((1)*sizeof(int));
+printf("\nEnter element to input in the list : ");
+scanf("%d", &c4[i]);
+(*len) = (*len) + 1;
+displaylist(c4, len);
+}
+
+
+
+void extend_list(int *c5, int *len)
+{
 int n,i;
 printf("\n\nHow many elements to you want to add in the list?");
 printf("\nInput value : ");
 scanf("%d", &n);
 for(i=(*len);i<((*len)+n);i++)
 {
-c4[i] = malloc((1)*sizeof(int));
+c5[i] = malloc((1)*sizeof(int));
 printf("\nEnter element %d of list : ", i+1);
-scanf("%d", &c4[i]);
+scanf("%d", &c5[i]);
 }
 (*len) = (*len) + n;
-displaylist(c4, len);
+displaylist(c5, len);
 }
