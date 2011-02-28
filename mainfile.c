@@ -125,7 +125,7 @@ return 1;
 void append_list(int *c4, int *len)
 {
 int i=(*len);
-c4[i] = malloc((1)*sizeof(int));
+c4[i] = (int)malloc((1)*sizeof(int));
 printf("\nEnter element to input in the list : ");
 scanf("%d", &c4[i]);
 (*len) = (*len) + 1;
@@ -142,7 +142,7 @@ printf("\nInput value : ");
 scanf("%d", &n);
 for(i=(*len);i<((*len)+n);i++)
 {
-c5[i] = malloc((1)*sizeof(int));
+c5[i] = (int)malloc((1)*sizeof(int));
 printf("\nEnter element %d of list : ", i+1);
 scanf("%d", &c5[i]);
 }
@@ -161,7 +161,7 @@ printf("\nPosition of element in list (taking zero as 1st element) : ");
 scanf("%d", &pos);
 if(pos==(*len))
 {
-c6[pos] = malloc((1)*sizeof(int));
+c6[pos] = (int)malloc((1)*sizeof(int));
 c6[pos] = val;
 (*len) = (*len) + 1;
 displaylist(c6, len);
