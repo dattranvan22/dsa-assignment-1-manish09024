@@ -4,8 +4,9 @@
 int *Main_list;
 
 int inputlist(int * );
-void displaylist(int * , int );
-int secondary_menu(int * , int );
+void displaylist(int * , int * );
+int secondary_menu(int * , int * );
+void append_list(int *, int * );
 
 void main()
 {
@@ -45,6 +46,8 @@ int num;
 printf("\n\nHow many elements do you wish to enter?");
 printf("\nInput value : ");
 scanf("%d", &num);
+int *p;
+p = &num;
 c1 = malloc((num)*sizeof(int));
 int i;
 for(i=0;i<num;i++)
@@ -52,8 +55,8 @@ for(i=0;i<num;i++)
 printf("\nInput integer %d : ", i+1);
 scanf("%d", &c1[i]);
 }
-displaylist(c1, num);
-if(secondary_menu(c1, num)==1)
+displaylist(c1, p);
+if(secondary_menu(c1, p)==1)
 return 1;
 else
 return 0;
@@ -61,19 +64,19 @@ return 0;
 
 
 
-void displaylist(int *c2, int len)
+void displaylist(int *c2, int *len)
 {
 int i;
 printf("\n");
 printf("\n\nThe input list is :");
-for(i=0;i<len;i++)
+for(i=0;i<(*len);i++)
 printf("\t%d", c2[i]);
 printf("\n");
 }
 
 
 
-int secondary_menu(int *c3, int len)
+int secondary_menu(int *c3, int *len)
 {
 int ch2,retr2=1;
 while(retr2==1)
@@ -98,7 +101,8 @@ scanf("%d", &ch2);
 printf("=================================================================================\n");
 switch(ch2)
 {
-case 1 : break;
+case 1 : append_list(c3, len);
+	 break;
 case 2 : break;
 case 3 : break;
 case 4 : break;
@@ -118,4 +122,22 @@ printf("\nInput choice : ");
 scanf("%d", &retr2);
 }
 return 1;
+}
+
+
+
+void append_list(int *c4, int *len)
+{
+int n,i;
+printf("\n\nHow many elements to you want to add in the list?");
+printf("\nInput value : ");
+scanf("%d", &n);
+for(i=(*len);i<((*len)+n);i++)
+{
+c4[i] = malloc((1)*sizeof(int));
+printf("\nEnter element %d of list : ", i+1);
+scanf("%d", &c4[i]);
+}
+(*len) = (*len) + n;
+displaylist(c4, len);
 }
