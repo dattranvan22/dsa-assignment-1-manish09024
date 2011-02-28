@@ -6,8 +6,12 @@ int *Main_list;
 int inputlist(int * );
 void displaylist(int * , int * );
 int secondary_menu(int * , int * );
-void append_list(int *, int * );
-void extend_list(int *, int * );
+void append_list(int * , int * );
+void extend_list(int * , int * );
+void insert_list(int * , int * );
+void remove_item(int * , int * );
+
+
 
 void main()
 {
@@ -65,18 +69,6 @@ return 0;
 
 
 
-void displaylist(int *c2, int *len)
-{
-int i;
-printf("\n");
-printf("\n\nThe input list is :");
-for(i=0;i<(*len);i++)
-printf("\t%d", c2[i]);
-printf("\n");
-}
-
-
-
 int secondary_menu(int *c3, int *len)
 {
 int ch2,retr2=1;
@@ -86,8 +78,8 @@ printf("\v\v\v\v\v==============================================================
 printf("\n				SECONDARY MENU");
 printf("\n=================================================================================");
 printf("\n\n1.  Append");
-printf("\n2.  Insert");
-printf("\n3.  Extend");
+printf("\n2.  Extend");
+printf("\n3.  Insert");
 printf("\n4.  Remove");
 printf("\n5.  Pop");
 printf("\n6.  Index");
@@ -106,8 +98,10 @@ case 1 : append_list(c3, len);
 	 break;
 case 2 : extend_list(c3, len);
 	 break;
-case 3 : break;
-case 4 : break;
+case 3 : insert_list(c3, len);
+	 break;
+case 4 : remove_item(c3, len);
+	 break;
 case 5 : break;
 case 6 : break;
 case 7 : break;
@@ -154,4 +148,79 @@ scanf("%d", &c5[i]);
 }
 (*len) = (*len) + n;
 displaylist(c5, len);
+}
+
+
+
+void insert_list(int *c6, int *len)
+{
+int val, pos;
+printf("\nValue of element to be inserted : ");
+scanf("%d", &val);
+printf("\nPosition of element in list (taking zero as 1st element) : ");
+scanf("%d", &pos);
+if(pos==(*len))
+{
+c6[pos] = malloc((1)*sizeof(int));
+c6[pos] = val;
+(*len) = (*len) + 1;
+displaylist(c6, len);
+}
+else if(pos<(*len) && pos>-1)
+{
+c6[pos] = val;
+displaylist(c6, len);
+}
+else
+printf("\n\n\nWrong position entered!!!\n\n\n");
+}
+
+
+
+void remove_item(int *c7, int *len)
+{
+int val, i, j, tmp, flag, pos;
+printf("\nThis will delete the first occurence of the element in the list...");
+printf("\nEnter the value of the element : ");
+scanf("%d", &val);
+for(i=0;i<(*len);i++)
+{
+if((c7[i]==val) && (i<(*len)-1))
+{
+pos = i;
+for(j=i;j<(*len)-1;j++)
+c7[j] = c7[j+1];
+(*len) = (*len)-1;
+flag = 1;
+break;
+}
+else if((c7[i]==val) && (i==(*len)-1))
+{
+(*len) = (*len)-1;
+flag = 1;
+pos = i;
+break;
+}
+else
+flag = 0;
+}
+if(flag==1)
+{
+printf("\n\nElement found and deleted at position %d...\n", pos+1);
+displaylist(c7, len);
+}
+else
+printf("\n\nElement not in list...!!!\n");
+}
+
+
+
+void displaylist(int *c2, int *len)
+{
+int i;
+printf("\n");
+printf("\n\nThe input list is :");
+for(i=0;i<(*len);i++)
+printf("\t%d", c2[i]);
+printf("\n");
 }
