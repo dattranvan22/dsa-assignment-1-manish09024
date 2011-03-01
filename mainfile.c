@@ -10,6 +10,9 @@ void append_list(int * , int * );
 void extend_list(int * , int * );
 void insert_list(int * , int * );
 void remove_item(int * , int * );
+void pop_item(int * , int * );
+void index_item(int * , int * );
+void count_item(int * , int * );
 
 
 
@@ -21,8 +24,8 @@ while(retr == 1)
 printf("\v\v\v\v\v=================================================================================");
 printf("\n					MENU");
 printf("\n=================================================================================");
-printf("\n\n1. Input a list");
-printf("\n2. Perform operations on default list");
+printf("\n\n1. Input a list and perform operations using arrays");
+printf("\n2. Input a list and perform operations using linked lists");
 printf("\n3. Exit");
 printf("\n\n=================================================================================");
 printf("\nInput choice : ");
@@ -102,9 +105,12 @@ case 3 : insert_list(c3, len);
 	 break;
 case 4 : remove_item(c3, len);
 	 break;
-case 5 : break;
-case 6 : break;
-case 7 : break;
+case 5 : pop_item(c3, len);
+	 break;
+case 6 : index_item(c3, len);
+	 break;
+case 7 : count_item(c3, len);
+	 break;
 case 8 : break;
 case 9 : break;
 case 10 : displaylist(c3, len);
@@ -215,7 +221,68 @@ printf("\n\nElement not in list...!!!\n");
 
 
 
+void pop_item(int *c8, int *len)
+{
+if((*len)>0)
+{
+printf("\nThe last element of the list has been popped...\n");
+(*len) = (*len) - 1;
+displaylist(c8, len);
+}
+else
+{
+printf("\n!!!UNDERFLOW!!!");
+printf("\nEmpty list!! No element to pop!!!\n");
+}
+}
+
+
+
+void index_item(int *c9, int *len)
+{
+int i, val, flag=0;
+printf("\nEnter value to be searched in the list : ");
+scanf("%d", &val);
+for(i=0;i<(*len);i++)
+{
+if(c9[i]==val)
+{
+flag = 1;
+break;
+}
+else
+flag = 0;
+}
+if(flag!=0)
+printf("\nElement found at position %d...\n", i+1);
+else
+printf("\nElement not in list...!!!\n");
+}
+
+
+
+void count_item(int *c9, int *len)
+{
+int i, val, cnt=0;
+printf("\nEnter value of the element whose total number of occurences");
+printf("\nis to be found in the list : ");
+scanf("%d", &val);
+for(i=0;i<(*len);i++)
+{
+if(c9[i]==val)
+cnt++;
+}
+if(cnt!=0)
+printf("\nThe element appeared %d times in the list...\n", cnt);
+else
+printf("\nThe input element does not exist in the list...\n");
+}
+
+
+
 void displaylist(int *c2, int *len)
+{
+if((*len)>0)
 {
 int i;
 printf("\n");
@@ -223,4 +290,7 @@ printf("\n\nThe input list is :");
 for(i=0;i<(*len);i++)
 printf("\t%d", c2[i]);
 printf("\n");
+}
+else
+printf("\nThe list is empty!!!!\n");
 }
