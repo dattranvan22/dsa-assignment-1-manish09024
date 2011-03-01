@@ -14,6 +14,7 @@ void pop_item(int * , int * );
 void index_item(int * , int * );
 void count_item(int * , int * );
 void sort_list(int * , int * );
+void reverse_list(int * , int * );
 
 
 
@@ -114,7 +115,8 @@ case 7 : count_item(c3, len);
 	 break;
 case 8 : sort_list(c3, len);
 	 break;
-case 9 : break;
+case 9 : reverse_list(c3, len);
+	 break;
 case 10 : displaylist(c3, len);
           break;
 case 11 : return 1;
@@ -301,6 +303,33 @@ swapflag = 1;
 }while(swapflag == 1);
 printf("\nThe list has been sorted...");
 displaylist(c8, len);
+}
+
+
+
+void reverse_list(int *c7, int *len)
+{
+int temp, i, j;
+if((*len)%2!=0)
+{
+for(i=0,j=(*len)-1;i<((*len)-1)/2,j>((*len)-1)/2;i++,j--)
+{
+temp = c7[i];
+c7[i] = c7[j];
+c7[j] = temp;
+}
+}
+else
+{
+for(i=0,j=(*len)-1;i<(*len)/2,j>=(*len)/2;i++,j--)
+{
+temp = c7[i];
+c7[i] = c7[j];
+c7[j] = temp;
+}
+}
+printf("\nThe list has been reversed...");
+displaylist(c7, len);
 }
 
 
