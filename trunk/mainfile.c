@@ -13,6 +13,7 @@ void remove_item(int * , int * );
 void pop_item(int * , int * );
 void index_item(int * , int * );
 void count_item(int * , int * );
+void sort_list(int * , int * );
 
 
 
@@ -111,7 +112,8 @@ case 6 : index_item(c3, len);
 	 break;
 case 7 : count_item(c3, len);
 	 break;
-case 8 : break;
+case 8 : sort_list(c3, len);
+	 break;
 case 9 : break;
 case 10 : displaylist(c3, len);
           break;
@@ -280,13 +282,36 @@ printf("\nThe input element does not exist in the list...\n");
 
 
 
+void sort_list(int *c8, int *len)
+{
+int temp, i, swapflag;
+do
+{
+swapflag = 0;
+for(i=0;i<(*len)-1;i++)
+{
+if(c8[i]>c8[i+1])
+{
+temp =  c8[i];
+c8[i] = c8[i+1];
+c8[i+1] = temp;
+swapflag = 1;
+}
+}
+}while(swapflag == 1);
+printf("\nThe list has been sorted...");
+displaylist(c8, len);
+}
+
+
+
 void displaylist(int *c2, int *len)
 {
 if((*len)>0)
 {
 int i;
 printf("\n");
-printf("\n\nThe input list is :");
+printf("\n\nThe list of elements is :");
 for(i=0;i<(*len);i++)
 printf("\t%d", c2[i]);
 printf("\n");
