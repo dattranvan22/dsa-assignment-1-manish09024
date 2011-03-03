@@ -17,7 +17,7 @@ void displaylist1(struct complex * );
 int secondary_menu(int * , int * );
 int secondary_menu1(struct complex * );
 void append_list(int * , int * );
-void add_node(struct complex ** , int );
+void add_node(struct complex ** );
 void extend_list(int * , int * );
 void insert_list(int * , int * );
 void remove_item(int * , int * );
@@ -90,18 +90,13 @@ return 0;
 
 int inputlist1(struct complex *q)
 {
-int num, val;
+int num;
 printf("\n\nHow many starting elements of list do you wish to enter?");
 printf("\nInput value : ");
 scanf("%d", &num);
 int i;
 for(i=0;i<num;i++)
-{
-printf("\nInput value of node %d : ", i+1);
-scanf("%d", &val);
-add_node(&q, val);
-}
-displaylist1(q);
+add_node(&q);
 if(secondary_menu1(q)==1)
 return 1;
 else
@@ -170,6 +165,49 @@ return 1;
 
 int secondary_menu1(struct complex *q)
 {
+int ch2,retr2=1;
+while(retr2==1)
+{
+printf("\v\v\v\v\v=================================================================================");
+printf("\n				SECONDARY MENU");
+printf("\n=================================================================================");
+printf("\n\n1.  Append");
+printf("\n2.  Extend");
+printf("\n3.  Insert");
+printf("\n4.  Remove");
+printf("\n5.  Pop");
+printf("\n6.  Index");
+printf("\n7.  Count");
+printf("\n8.  Sort");
+printf("\n9.  Reverse");
+printf("\n10. Display");
+printf("\n11. Main menu");
+printf("\n\n=================================================================================");
+printf("\nInput choice : ");
+scanf("%d", &ch2);
+printf("=================================================================================\n");
+switch(ch2)
+{
+case 1 : add_node(&q);
+	 break;
+case 2 : break;
+case 3 : break;
+case 4 : break;
+case 5 : break;
+case 6 : break;
+case 7 : break;
+case 8 : break;
+case 9 : break;
+case 10 : displaylist1(q);
+          break;
+case 11 : return 1;
+default : break;
+}
+printf("To go back to secondary menu, press 1.");
+printf("\nTo return to main menu, press any other key.");
+printf("\nInput choice : ");
+scanf("%d", &retr2);
+}
 return 1;
 }
 
@@ -187,10 +225,13 @@ displaylist(c4, len);
 
 
 
-void add_node(struct complex **q, int num)
+void add_node(struct complex **q)
 {
+int val;
 struct complex *temp;
 temp = *q;
+printf("\nInput value of node : ");
+scanf("%d", &val);
 if(*q==NULL)
 {
 *q=malloc(sizeof(struct complex));
@@ -205,8 +246,10 @@ temp->link = malloc(sizeof(struct complex));
 temp=temp->link;
 }
 
-temp->data = num;
+temp->data = val;
 temp->link = NULL;
+temp = *q;
+displaylist1(temp);
 }
 
 
