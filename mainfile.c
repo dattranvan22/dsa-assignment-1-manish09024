@@ -5,26 +5,50 @@ struct complex
 {
 int data;
 struct complex *link;
-};
+} *first=NULL, *last=NULL;
 
 int *Main_list;
-struct complex *Main_list1;
 
 int inputlist(int * );
-int inputlist1(struct complex * );
+int inputlist1();
+
+
 void displaylist(int * , int * );
-void displaylist1(struct complex * );
+void displaylist1();
+
+
 int secondary_menu(int * , int * );
-int secondary_menu1(struct complex * );
+int secondary_menu1();
+
+
 void append_list(int * , int * );
-void add_node(struct complex ** );
+void add_node(int );
+
+
 void extend_list(int * , int * );
+void extend_ll_list();
+
+
 void insert_list(int * , int * );
+
+
 void remove_item(int * , int * );
+
+
 void pop_item(int * , int * );
+void pop_ll_item();
+
+
 void index_item(int * , int * );
+
+
 void count_item(int * , int * );
+
+
 void sort_list(int * , int * );
+void sort_ll_list();
+
+
 void reverse_list(int * , int * );
 
 
@@ -48,7 +72,7 @@ switch(choice)
 {
 case 1 : retr = inputlist(Main_list);
          break;
-case 2 : retr = inputlist1(Main_list1);
+case 2 : retr = inputlist1();
 	 break;
 case 3 : exit(0);
 default : printf("\n\nWRONG INPUT VALUE!!!!");
@@ -88,16 +112,41 @@ return 0;
 
 
 
-int inputlist1(struct complex *q)
+int inputlist1()
 {
-int num;
-printf("\n\nHow many starting elements of list do you wish to enter?");
-printf("\nInput value : ");
+int num,flag=0;
+int ch=1;
+struct complex *n;
+while(ch==1)
+{
+if(flag==0)
+{
+printf("\nEnter the value of the element : ");
 scanf("%d", &num);
-int i;
-for(i=0;i<num;i++)
-add_node(&q);
-if(secondary_menu1(q)==1)
+n=malloc(sizeof(struct complex));
+n->data=num;
+n->link=NULL;
+first=n;
+last=n;
+flag=1;
+displaylist1();
+}
+else
+{
+printf("\nEnter the value of the element : ");
+scanf("%d", &num);
+n=malloc(sizeof(struct complex));
+n->data=num;
+n->link=NULL;
+last->link=n;
+last=n;
+displaylist1();
+}
+printf("\n\nInput 1 to add more elements.");
+printf("\nInput : ");
+scanf("%d",&ch);
+}
+if(secondary_menu1()==1)
 return 1;
 else
 return 0;
@@ -163,9 +212,9 @@ return 1;
 
 
 
-int secondary_menu1(struct complex *q)
+int secondary_menu1()
 {
-int ch2,retr2=1;
+int ch2, retr2=1, val1;
 while(retr2==1)
 {
 printf("\v\v\v\v\v=================================================================================");
@@ -188,18 +237,24 @@ scanf("%d", &ch2);
 printf("=================================================================================\n");
 switch(ch2)
 {
-case 1 : add_node(&q);
+case 1 : printf("\nInput the value of the element you want to append : ");
+	 scanf("%d", &val1);
+	 add_node(val1);
+	 displaylist1();
 	 break;
-case 2 : break;
+case 2 : extend_ll_list();
+	 break;
 case 3 : break;
 case 4 : break;
-case 5 : break;
+case 5 : pop_ll_item();
+	 break;
 case 6 : break;
 case 7 : break;
-case 8 : break;
+case 8 : sort_ll_list();
+	 break;
 case 9 : break;
-case 10 : displaylist1(q);
-          break;
+case 10 : displaylist1();
+	  break;
 case 11 : return 1;
 default : break;
 }
@@ -225,31 +280,22 @@ displaylist(c4, len);
 
 
 
-void add_node(struct complex **q)
+void add_node(int num)
 {
-int val;
-struct complex *temp;
-temp = *q;
-printf("\nInput value of node : ");
-scanf("%d", &val);
-if(*q==NULL)
+struct complex *n;
+n=malloc(sizeof(struct complex));
+n->data=num;
+n->link=NULL;
+if(first==NULL)
 {
-*q=malloc(sizeof(struct complex));
-temp = *q;
+first=n;
+last=first;
 }
 else
 {
-while((temp->link)!=NULL)
-temp=temp->link;
-
-temp->link = malloc(sizeof(struct complex));
-temp=temp->link;
+last->link=n;
+last=n;
 }
-
-temp->data = val;
-temp->link = NULL;
-temp = *q;
-displaylist1(temp);
 }
 
 
@@ -268,6 +314,26 @@ scanf("%d", &c5[i]);
 }
 (*len) = (*len) + n;
 displaylist(c5, len);
+}
+
+
+
+void extend_ll_list()
+{
+int num;
+printf("\n\nHow many elements do you wish to enter?");
+printf("\nInput value : ");
+scanf("%d", &num);
+int a[num];
+int i;
+for(i=0;i<num;i++)
+{
+printf("\nInput value %d : ", i+1);
+scanf("%d", &a[i]);
+}
+for(i=0;i<num;i++)
+add_node(a[i]);
+displaylist1();
 }
 
 
@@ -352,6 +418,29 @@ printf("\nEmpty list!! No element to pop!!!\n");
 
 
 
+void pop_ll_item()
+{
+struct complex *tmp;
+for(tmp=first;tmp!=NULL;tmp=tmp->link)
+{
+if(tmp->link==last)
+{
+tmp->link=NULL;
+last=tmp;
+break;
+}
+if(first==last)
+{
+first=NULL;
+last=NULL;
+break;
+}
+}
+displaylist1();
+}
+
+
+
 void index_item(int *c9, int *len)
 {
 int i, val, flag=0;
@@ -417,6 +506,28 @@ displaylist(c8, len);
 
 
 
+void sort_ll_list()
+{
+struct complex *temp1,*temp2;
+int temp;
+for(temp1=first;temp1->link!=NULL;temp1=temp1->link)
+{
+for(temp2=temp1->link;temp2!=NULL;temp2=temp2->link)
+{
+if((temp2->data)<(temp1->data))
+{
+temp=temp1->data;
+temp1->data=temp2->data;
+temp2->data=temp;
+}
+}
+}
+printf("\nThe list has been sorted...");
+displaylist1();
+}
+
+
+
 void reverse_list(int *c7, int *len)
 {
 int temp, i, j;
@@ -461,18 +572,18 @@ printf("\nThe list is empty!!!!\n");
 
 
 
-void displaylist1(struct complex *pt)
+void displaylist1()
 {
-if(pt!=NULL)
+struct complex *tmp;
+if(first!=NULL)
 {
-printf("\n\nThe list of elements is : ");
-while(pt!=NULL)
+printf("\n\nThe List is : ");
+for(tmp=first;tmp!=NULL;tmp=tmp->link)
 {
-if(pt->link!=NULL)
-printf("%d -> ", pt->data);
+if(tmp->link!=NULL)
+printf("%d -> ",tmp->data);
 else
-printf("%d", pt->data);
-pt=pt->link;
+printf("%d", tmp->data);
 }
 printf("\n");
 }
