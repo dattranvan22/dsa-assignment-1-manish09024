@@ -1,12 +1,23 @@
 #include<stdio.h>
 #include<stdlib.h>
 
+struct complex
+{
+int data;
+struct complex *link;
+};
+
 int *Main_list;
+struct complex *Main_list1;
 
 int inputlist(int * );
+int inputlist1(struct complex * );
 void displaylist(int * , int * );
+void displaylist1(struct complex * );
 int secondary_menu(int * , int * );
+int secondary_menu1(struct complex * );
 void append_list(int * , int * );
+void add_node(struct complex ** , int );
 void extend_list(int * , int * );
 void insert_list(int * , int * );
 void remove_item(int * , int * );
@@ -35,9 +46,10 @@ scanf("%d", &choice);
 printf("=================================================================================\n");
 switch(choice)
 {
-case 1 : retr=inputlist(Main_list);
+case 1 : retr = inputlist(Main_list);
          break;
-case 2 : break;
+case 2 : retr = inputlist1(Main_list1);
+	 break;
 case 3 : exit(0);
 default : printf("\n\nWRONG INPUT VALUE!!!!");
           break;
@@ -49,6 +61,8 @@ scanf("%d", &retr);
 }
 }
 }
+
+
 
 int inputlist(int *c1)
 {
@@ -67,6 +81,28 @@ scanf("%d", &c1[i]);
 }
 displaylist(c1, p);
 if(secondary_menu(c1, p)==1)
+return 1;
+else
+return 0;
+}
+
+
+
+int inputlist1(struct complex *q)
+{
+int num, val;
+printf("\n\nHow many starting elements of list do you wish to enter?");
+printf("\nInput value : ");
+scanf("%d", &num);
+int i;
+for(i=0;i<num;i++)
+{
+printf("\nInput value of node %d : ", i+1);
+scanf("%d", &val);
+add_node(&q, val);
+}
+displaylist1(q);
+if(secondary_menu1(q)==1)
 return 1;
 else
 return 0;
@@ -132,6 +168,13 @@ return 1;
 
 
 
+int secondary_menu1(struct complex *q)
+{
+return 1;
+}
+
+
+
 void append_list(int *c4, int *len)
 {
 int i=(*len);
@@ -140,6 +183,30 @@ printf("\nEnter element to input in the list : ");
 scanf("%d", &c4[i]);
 (*len) = (*len) + 1;
 displaylist(c4, len);
+}
+
+
+
+void add_node(struct complex **q, int num)
+{
+struct complex *temp;
+temp = *q;
+if(*q==NULL)
+{
+*q=malloc(sizeof(struct complex));
+temp = *q;
+}
+else
+{
+while((temp->link)!=NULL)
+temp=temp->link;
+
+temp->link = malloc(sizeof(struct complex));
+temp=temp->link;
+}
+
+temp->data = num;
+temp->link = NULL;
 }
 
 
@@ -343,6 +410,27 @@ printf("\n");
 printf("\n\nThe list of elements is :");
 for(i=0;i<(*len);i++)
 printf("\t%d", c2[i]);
+printf("\n");
+}
+else
+printf("\nThe list is empty!!!!\n");
+}
+
+
+
+void displaylist1(struct complex *pt)
+{
+if(pt!=NULL)
+{
+printf("\n\nThe list of elements is : ");
+while(pt!=NULL)
+{
+if(pt->link!=NULL)
+printf("%d -> ", pt->data);
+else
+printf("%d", pt->data);
+pt=pt->link;
+}
 printf("\n");
 }
 else
