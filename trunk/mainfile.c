@@ -30,6 +30,7 @@ void extend_ll_list();
 
 
 void insert_list(int * , int * );
+void insert_ll_list(int , int );
 
 
 void remove_item(int * , int * );
@@ -43,6 +44,7 @@ void index_item(int * , int * );
 
 
 void count_item(int * , int * );
+void count_ll_item(int );
 
 
 void sort_list(int * , int * );
@@ -244,12 +246,22 @@ case 1 : printf("\nInput the value of the element you want to append : ");
 	 break;
 case 2 : extend_ll_list();
 	 break;
-case 3 : break;
+case 3 : printf("\nEnter value to insert : ");
+	 int v,p;
+	 scanf("%d", &v);
+	 printf("\nAt what position do you want to enter the element : ");
+	 scanf("%d", &p);
+	 insert_ll_list(v, p);
+	 break;
 case 4 : break;
 case 5 : pop_ll_item();
 	 break;
 case 6 : break;
-case 7 : break;
+case 7 : printf("\nEnter value whose occurences you want to find : ");
+	 int v0;
+	 scanf("%d", &v0);
+	 count_ll_item(v0);
+	 break;
 case 8 : sort_ll_list();
 	 break;
 case 9 : break;
@@ -359,6 +371,37 @@ displaylist(c6, len);
 }
 else
 printf("\n\n\nWrong position entered!!!\n\n\n");
+}
+
+
+
+void insert_ll_list(int num, int pos)
+{
+int c=1;
+struct complex *temp,*n;
+n=malloc(sizeof(struct complex));
+for(temp=first;temp!=NULL;temp=temp->link)
+{
+if(pos==1)
+{
+n->data=num;
+n->link=first;
+first=n;
+displaylist1();
+break;
+}
+else if(pos==c+1)
+{
+n->data=num;
+n->link=temp->link;
+temp->link=n;
+displaylist1();
+break;
+}
+else
+c++;
+}
+printf("\nThe input position is incorrect!!!\n");
 }
 
 
@@ -479,6 +522,26 @@ if(cnt!=0)
 printf("\nThe element appeared %d times in the list...\n", cnt);
 else
 printf("\nThe input element does not exist in the list...\n");
+}
+
+
+
+void count_ll_item(int num)
+{
+struct complex *temp;
+int len=0;
+for(temp=first;temp!=NULL;temp=temp->link)
+{
+if(temp->data==num)
+len++;
+}
+if(len!=0)
+{
+displaylist1();
+printf("\nThe number of occurences are : %d\n", len);
+}
+else
+printf("\nThe element does not exist in the list!!!\n");
 }
 
 
