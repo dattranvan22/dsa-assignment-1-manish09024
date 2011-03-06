@@ -34,6 +34,7 @@ void insert_ll_list(int , int );
 
 
 void remove_item(int * , int * );
+void remove_ll_item(int );
 
 
 void pop_item(int * , int * );
@@ -41,6 +42,7 @@ void pop_ll_item();
 
 
 void index_item(int * , int * );
+void index_ll_item(int );
 
 
 void count_item(int * , int * );
@@ -52,6 +54,7 @@ void sort_ll_list();
 
 
 void reverse_list(int * , int * );
+void reverse_ll_list();
 
 
 
@@ -253,10 +256,18 @@ case 3 : printf("\nEnter value to insert : ");
 	 scanf("%d", &p);
 	 insert_ll_list(v, p);
 	 break;
-case 4 : break;
+case 4 : printf("\nEnter value you want to remove from list : ");
+	 int rval;
+	 scanf("%d", &rval);
+	 remove_ll_item(rval);
+	 break;
 case 5 : pop_ll_item();
 	 break;
-case 6 : break;
+case 6 : printf("\nInput number for which the index is to be found : ");
+	 int ival;
+	 scanf("%d", &ival);
+	 index_ll_item(ival);
+	 break;
 case 7 : printf("\nEnter value whose occurences you want to find : ");
 	 int v0;
 	 scanf("%d", &v0);
@@ -264,7 +275,8 @@ case 7 : printf("\nEnter value whose occurences you want to find : ");
 	 break;
 case 8 : sort_ll_list();
 	 break;
-case 9 : break;
+case 9 : reverse_ll_list();
+	 break;
 case 10 : displaylist1();
 	  break;
 case 11 : return 1;
@@ -444,6 +456,45 @@ printf("\n\nElement not in list...!!!\n");
 
 
 
+void remove_ll_item(int num)
+{
+struct complex *temp;
+int pos=0;
+for(temp=first;temp!=NULL;temp=temp->link)
+{
+if(temp!=last)
+{
+if((temp->link->data==num) && (temp->link!=last))
+{
+temp->link=temp->link->link;
+printf("\nElement found and deleted at position %d...", pos);
+displaylist1();
+break;
+}
+else if((temp->link->data==num) && (temp->link==last))
+{
+temp->link=temp->link->link;
+last=temp;
+printf("\nElement found and deleted at position %d...", pos);
+displaylist1();
+break;
+}
+}
+if(temp==first)
+{
+if(first->data==num)
+{
+first=temp->link;
+printf("\nElement found and deleted at position 1...");
+displaylist1();
+break;
+}
+}
+}
+}
+
+
+
 void pop_item(int *c8, int *len)
 {
 if((*len)>0)
@@ -503,6 +554,27 @@ if(flag!=0)
 printf("\nElement found at position %d...\n", i+1);
 else
 printf("\nElement not in list...!!!\n");
+}
+
+
+
+void index_ll_item(int num)
+{
+int pos=1;
+struct complex *tfind;
+tfind=first;
+while(tfind!=NULL)
+{
+if(tfind->data==num)
+{
+printf("\nElement found at position %d...\n", pos);
+break;
+}
+else
+pos++;
+tfind=tfind->link;
+}
+printf("Element does not exist in list...\n");
 }
 
 
@@ -614,6 +686,37 @@ c7[j] = temp;
 }
 printf("\nThe list has been reversed...");
 displaylist(c7, len);
+}
+
+
+
+void reverse_ll_list()
+{
+struct complex *t1,*t2,*t3;
+t1 = first;
+t2 = NULL;
+t3 = NULL;
+while(t1!=NULL)
+{
+first=t1;
+if(t3==NULL)
+{
+t2=t1->link;
+t1->link=t3;
+t3=t1;
+t1=t2;
+last=t3;
+}
+else
+{
+t2=t1->link;
+t1->link=t3;
+t3=t1;
+t1=t2;
+}
+}
+printf("\nThe list has been reversed...");
+displaylist1();
 }
 
 
