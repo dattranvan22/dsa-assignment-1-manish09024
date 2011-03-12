@@ -602,10 +602,12 @@ void count_ll_item(int num)
 {
 struct complex *temp;
 int len=0;
-for(temp=first;temp!=NULL;temp=temp->link)
+temp=first;
+for(temp!=NULL)
 {
 if(temp->data==num)
 len++;
+temp=temp->link;
 }
 if(len!=0)
 {
@@ -643,19 +645,18 @@ displaylist(c8, len);
 
 void sort_ll_list()
 {
-struct complex *temp1,*temp2;
+struct complex *temp1;
+temp1=first;
 int temp;
-for(temp1=first;temp1->link!=NULL;temp1=temp1->link)
+while(temp1->link!=NULL)
 {
-for(temp2=temp1->link;temp2!=NULL;temp2=temp2->link)
-{
-if((temp2->data)<(temp1->data))
+if((temp1->data)>(temp1->link->data))
 {
 temp=temp1->data;
-temp1->data=temp2->data;
-temp2->data=temp;
+temp1->data = temp1->link->data;
+temp1->link->data = temp;
 }
-}
+temp1=temp1->link;
 }
 printf("\nThe list has been sorted...");
 displaylist1();
